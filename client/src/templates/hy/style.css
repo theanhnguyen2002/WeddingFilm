@@ -1,0 +1,174 @@
+/* Giao diện "Hỷ truyền thống": đỏ đô và vàng đồng, khung thiệp cưới đôi viền. */
+html[data-template='hy'] {
+  --font-display: 'Noto Serif SC', 'Playfair Display', 'Lora', Georgia, serif;
+  --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
+}
+/* Biến thể mặc định: nền kem, viền vàng, màu nhấn đỏ son (tuỳ chỉnh được). */
+.hy-root.is-gold {
+  --hy-gold: #c9a24f; --hy-accent: var(--accent, #8e1b1b);
+  --bg: #fbf1dc; --bg2: #f4e3be; --hy-fg: #4a1218; --hy-mute: #7a5a4a; --hy-head: var(--hy-accent);
+  --hy-panel: rgba(255, 255, 255, 0.55); --hy-btn-bg: var(--hy-accent); --hy-btn-fg: #fbf1dc;
+  --hy-hero: radial-gradient(60% 50% at 50% 28%, #fff8e8 0%, transparent 75%), linear-gradient(180deg, #f6e6c4, #fbf1dc);
+  --hy-foot: #5c0f0f; --hy-foot-fg: #f3d9a8; --hy-card: linear-gradient(180deg, #fffaf0, #f8ebcd);
+  --hy-seal: var(--hy-accent); --hy-seal-fg: #f7dfa6;
+  --color-snow: #fbf1dc; --color-paper: #fffaf0; --color-ink: #4a1218; --color-mute: #7a5a4a; --color-line: #dcc58f;
+  --color-claret: var(--hy-accent); --color-claret-deep: color-mix(in srgb, var(--hy-accent) 75%, #000);
+  --color-rose: #ecd2a2; --color-night: #5c0f0f; --color-night-2: #7a1620; --color-gold: #c9a24f; --color-blush: #f4e3be;
+}
+/* Biến thể nền đỏ đậm, chữ kem, vàng đồng. */
+.hy-root.is-red {
+  --hy-gold: #e8c36a; --hy-accent: #e8c36a; --hy-red: var(--accent, #8e1b1b);
+  --bg: var(--hy-red); --bg2: color-mix(in srgb, var(--hy-red) 82%, #000); --hy-fg: #fbf1dc; --hy-mute: #e4cfa6; --hy-head: color-mix(in srgb, var(--hy-accent) 55%, #fff);
+  --hy-panel: rgba(0, 0, 0, 0.16); --hy-btn-bg: linear-gradient(180deg, var(--hy-head), var(--hy-accent)); --hy-btn-fg: #5c0f0f;
+  --hy-hero: radial-gradient(60% 50% at 50% 28%, color-mix(in srgb, var(--hy-red) 80%, #fff) 0%, transparent 75%), linear-gradient(180deg, color-mix(in srgb, var(--hy-red) 75%, #000), var(--hy-red));
+  --hy-foot: color-mix(in srgb, var(--hy-red) 55%, #000); --hy-foot-fg: #e4cfa6; --hy-card: linear-gradient(180deg, color-mix(in srgb, var(--hy-red) 88%, #fff), color-mix(in srgb, var(--hy-red) 90%, #000));
+  --hy-seal: radial-gradient(circle, var(--hy-head), var(--hy-accent)); --hy-seal-fg: #5c0f0f;
+  --color-snow: var(--hy-red); --color-paper: #fbf1dc; --color-ink: #fbf1dc; --color-mute: #e4cfa6;
+  --color-line: color-mix(in srgb, var(--hy-accent) 45%, transparent);
+  --color-claret: var(--hy-accent); --color-claret-deep: color-mix(in srgb, var(--hy-accent) 78%, #000);
+  --color-rose: #f3d9a8; --color-night: color-mix(in srgb, var(--hy-red) 50%, #000); --color-night-2: color-mix(in srgb, var(--hy-red) 70%, #000); --color-gold: var(--hy-accent); --color-blush: color-mix(in srgb, var(--hy-red) 82%, #000);
+}
+html[data-template='hy'] body { background: #fbf1dc; }
+.hy-root { background: var(--bg); color: var(--hy-fg); font-family: var(--font-sans); overflow-x: clip; }
+.hy-root a { color: inherit; text-decoration: none; }
+.hy-wrap { margin-inline: auto; max-width: 1180px; padding-inline: 1.25rem; }
+@media (min-width: 768px) { .hy-wrap { padding-inline: 2.5rem; } }
+.hy-sec { position: relative; padding-block: 4.5rem; }
+@media (min-width: 768px) { .hy-sec { padding-block: 7rem; } }
+.hy-sec:nth-of-type(even) { background: var(--bg2); }
+.hy-eyebrow { font-size: 0.78rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--hy-gold); }
+.hy-title { text-align: center; margin-bottom: 3rem; }
+.hy-h2 { margin-top: 0.6rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 4.4vw, 3.3rem); line-height: 1.2; color: var(--hy-head); }
+.hy-body { max-width: 46rem; margin: 0 auto; text-align: center; line-height: 1.95; color: var(--hy-mute); font-size: 1.05rem; }
+.hy-more { margin-top: 2.5rem; text-align: center; }
+.hy-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 2.1rem; background: var(--hy-btn-bg); color: var(--hy-btn-fg) !important; font-weight: 600; font-size: 0.88rem; letter-spacing: 0.1em; border: 1px solid var(--hy-gold); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3); transition: transform 0.25s, filter 0.25s; cursor: pointer; }
+.hy-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.hy-btn-ghost { background: transparent; color: var(--hy-head) !important; box-shadow: none; }
+.hy-btn-ghost:hover { background: var(--hy-gold); color: var(--hy-btn-fg) !important; }
+
+/* Đường kẻ chữ Hỷ */
+.hy-rule { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; color: var(--hy-gold); }
+.hy-rule span { height: 1px; width: 5rem; background: linear-gradient(90deg, transparent, var(--hy-gold)); }
+.hy-rule span:last-child { transform: scaleX(-1); }
+.hy-rule-glyph { font-size: 1.6rem; line-height: 1; }
+
+/* Khung thiệp */
+.hy-frame { position: relative; border: 1px solid var(--hy-gold); padding: 6px; }
+.hy-frame::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--hy-gold) 55%, transparent); pointer-events: none; }
+.hy-corner { position: absolute; width: 2.4rem; height: 2.4rem; color: var(--hy-gold); z-index: 2; pointer-events: none; }
+.hy-c-tl { top: -1px; left: -1px; } .hy-c-tr { top: -1px; right: -1px; transform: scaleX(-1); }
+.hy-c-bl { bottom: -1px; left: -1px; transform: scaleY(-1); } .hy-c-br { bottom: -1px; right: -1px; transform: scale(-1); }
+
+/* Đầu trang */
+.hy-head { position: fixed; inset: 0 0 auto 0; z-index: 40; transition: background 0.3s; }
+.hy-head.is-solid { background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--color-line); }
+.hy-head-in { margin-inline: auto; max-width: 1280px; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 1.25rem; }
+@media (min-width: 768px) { .hy-head-in { padding-inline: 2.5rem; } }
+.hy-nav { display: none; gap: 2rem; }
+@media (min-width: 1000px) { .hy-nav { display: flex; } .hy-burger { display: none !important; } }
+.hy-nav a, .hy-drop a { font-size: 0.88rem; letter-spacing: 0.08em; color: var(--hy-fg); transition: color 0.2s; }
+.hy-nav a:hover { color: var(--hy-head); }
+.hy-burger { font-size: 1.4rem; color: var(--hy-gold); padding: 0.4rem 0.8rem; }
+.hy-drop { display: grid; padding: 0.5rem 1.25rem 1.5rem; background: var(--bg); }
+.hy-drop a { padding: 0.9rem 0; border-bottom: 1px solid var(--color-line); }
+
+/* Mở đầu */
+.hy-hero { position: relative; overflow: hidden; padding: 8rem 1.25rem 5rem; text-align: center; background: var(--hy-hero); }
+.hy-hero-in { position: relative; z-index: 1; margin-inline: auto; max-width: 60rem; display: grid; justify-items: center; }
+.hy-big { display: grid; place-items: center; width: 5.5rem; height: 5.5rem; font-size: 3.4rem; color: var(--hy-seal-fg); background: var(--hy-seal); border-radius: 50%; box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--hy-gold), 0 14px 40px rgba(0, 0, 0, 0.45); font-weight: 900; }
+.hy-eyebrow-light { margin-top: 1.4rem; }
+.hy-h1 { margin-top: 1rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 5.6vw, 4.4rem); line-height: 1.2; color: var(--hy-fg); max-width: 18ch; }
+.hy-h1 em { font-style: normal; display: block; color: var(--hy-head); }
+.hy-lead { margin-top: 1rem; max-width: 34rem; line-height: 1.85; color: var(--hy-mute); }
+.hy-hero-photo { margin-top: 2.2rem; width: min(100%, 38rem); }
+.hy-photo-in { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #2b050b; }
+.hy-cta { margin-top: 2.2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+.hy-lantern { position: absolute; top: 0; width: 2.8rem; height: auto; transform-origin: top center; animation: hy-sway 5s ease-in-out infinite; }
+.hy-lantern-l { left: 5vw; } .hy-lantern-r { right: 5vw; animation-delay: -2.5s; }
+@media (min-width: 900px) { .hy-lantern { width: 4.6rem; } .hy-lantern-l { left: 9vw; } .hy-lantern-r { right: 9vw; } }
+@keyframes hy-sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.hy-cloud { position: absolute; width: 9rem; color: var(--hy-gold); opacity: 0.35; }
+.hy-cloud-l { left: 2vw; top: 42%; } .hy-cloud-r { right: 2vw; top: 56%; }
+@media (max-width: 767px) { .hy-cloud { display: none; } }
+html[data-motion='off'] .hy-lantern { animation: none; }
+
+/* Giới thiệu */
+.hy-points { margin-top: 3rem; display: grid; gap: 1.25rem; }
+@media (min-width: 768px) { .hy-points { grid-template-columns: repeat(3, 1fr); } }
+.hy-points li > div { height: 100%; text-align: center; padding: 2rem 1.5rem; border: 1px solid var(--color-line); background: var(--hy-panel); }
+.hy-mini { display: inline-grid; place-items: center; width: 2.8rem; height: 2.8rem; border-radius: 50%; border: 1px solid var(--hy-gold); color: var(--hy-gold); font-size: 1.4rem; }
+.hy-points h3 { margin-top: 0.9rem; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--hy-head); }
+.hy-points p { margin-top: 0.5rem; color: var(--hy-mute); line-height: 1.75; font-size: 0.93rem; }
+.hy-stats { margin-top: 3rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem 4rem; }
+.hy-stats li { text-align: center; }
+.hy-stats b { display: block; font-family: var(--font-display); font-size: 2.6rem; color: var(--hy-head); line-height: 1.1; }
+.hy-stats span { font-size: 0.82rem; color: var(--hy-mute); }
+
+/* Ảnh */
+.hy-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: 2.5rem; }
+.hy-chips button { padding: 0.5rem 1.3rem; border: 1px solid var(--hy-gold); color: var(--hy-head); font-size: 0.85rem; letter-spacing: 0.06em; transition: all 0.2s; cursor: pointer; }
+.hy-chips button:hover { background: rgba(217, 178, 106, 0.18); }
+.hy-chips button.is-on { background: var(--hy-accent); color: var(--hy-btn-fg); border-color: var(--hy-accent); font-weight: 600; }
+.hy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+@media (min-width: 768px) { .hy-grid { grid-template-columns: repeat(4, 1fr); gap: 1.4rem; } }
+.hy-ph { display: block; width: 100%; padding: 6px 6px 0.5rem; background: #fffaf0; border: 1px solid var(--hy-gold); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35); text-align: center; cursor: zoom-in; transition: transform 0.3s; }
+.hy-ph:hover { transform: translateY(-4px); }
+.hy-ph-in { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: #2b050b; }
+.hy-ph-cap { display: block; margin-top: 0.5rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; color: var(--hy-accent, #8e1b1b); }
+
+/* Phim */
+.hy-screen-frame { max-width: 56rem; margin-inline: auto; }
+.hy-screen { position: relative; aspect-ratio: 16 / 9; background: #240409; overflow: hidden; }
+.hy-vcap { position: absolute; inset: auto 0 0 0; padding: 2rem 1rem 0.9rem; background: linear-gradient(transparent, rgba(40, 4, 10, 0.85)); font-family: var(--font-display); font-weight: 600; color: var(--hy-head); font-size: clamp(0.9rem, 1.8vw, 1.2rem); text-align: center; }
+.hy-vlist { margin-top: 1.8rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.hy-vlist button { display: grid; width: 9.5rem; gap: 0.4rem; text-align: center; cursor: pointer; }
+.hy-vthumb { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--color-line); transition: border-color 0.2s; }
+.hy-vlist button[aria-current='true'] .hy-vthumb { border: 2px solid var(--hy-gold); }
+.hy-vlist b { font-size: 0.78rem; font-weight: 500; line-height: 1.35; color: var(--hy-mute); }
+
+/* Dịch vụ */
+.hy-cards { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .hy-cards { grid-template-columns: repeat(3, 1fr); } .hy-cards li.is-hl { transform: translateY(-0.8rem); } }
+.hy-cards li { display: flex; }
+.hy-cards li > div { width: 100%; }
+.hy-card { display: flex; flex-direction: column; align-items: center; height: 100%; padding: 2.6rem 1.6rem 2rem; text-align: center; background: var(--hy-card); }
+.hy-cards li.is-hl .hy-card { box-shadow: 0 0 0 1px var(--hy-gold), 0 24px 50px rgba(0, 0, 0, 0.45); }
+.hy-badge { position: absolute; top: -0.9rem; left: 50%; transform: translateX(-50%); background: var(--hy-accent); color: var(--hy-btn-fg) !important; color: var(--hy-btn-fg); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.3rem 1rem; white-space: nowrap; z-index: 3; }
+.hy-card-hy { display: grid; place-items: center; width: 3rem; height: 3rem; font-size: 1.7rem; color: var(--hy-gold); border: 1px solid var(--hy-gold); border-radius: 50%; }
+.hy-card h3 { margin-top: 1rem; font-family: var(--font-display); font-weight: 700; font-size: 1.55rem; color: var(--hy-head); line-height: 1.25; }
+.hy-card-tag { margin-top: 0.5rem; color: var(--hy-mute); font-size: 0.92rem; line-height: 1.6; }
+.hy-card ul { margin: 1.4rem 0 1.8rem; width: 100%; flex: 1; text-align: left; }
+.hy-card ul li { position: relative; padding: 0.65rem 0 0.65rem 1.5rem; border-bottom: 1px dashed color-mix(in srgb, var(--hy-gold) 55%, transparent); font-size: 0.9rem; line-height: 1.55; color: var(--hy-fg); }
+.hy-card ul li::before { content: '❖'; position: absolute; left: 0; top: 0.68rem; font-size: 0.75rem; color: var(--hy-gold); }
+
+/* Quy trình */
+.hy-steps { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .hy-steps { grid-template-columns: repeat(5, 1fr); } .hy-steps:has(li:nth-child(6)) { grid-template-columns: repeat(3, 1fr); } }
+.hy-steps li > div { height: 100%; padding: 1.8rem 1.2rem; text-align: center; border: 1px solid var(--color-line); background: var(--hy-panel); }
+.hy-no { display: inline-grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: 50%; background: var(--hy-accent); color: var(--hy-btn-fg); font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
+.hy-steps h3 { margin-top: 0.9rem; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--hy-head); }
+.hy-steps p { margin-top: 0.4rem; color: var(--hy-mute); line-height: 1.7; font-size: 0.9rem; }
+
+/* Cảm nhận */
+.hy-q-grid { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .hy-q-grid { grid-template-columns: repeat(3, 1fr); } }
+.hy-q-grid li > div { height: 100%; }
+.hy-q { height: 100%; padding: 2.2rem 1.6rem 1.6rem; background: var(--hy-panel); }
+.hy-q p { line-height: 1.85; font-size: 0.97rem; color: var(--hy-fg); }
+.hy-q footer { margin-top: 1.1rem; display: grid; gap: 0.1rem; }
+.hy-q footer b { font-family: var(--font-display); color: var(--hy-head); }
+.hy-q footer span { font-size: 0.8rem; color: var(--hy-mute); }
+
+/* Liên hệ */
+.hy-contact-grid { display: grid; gap: 2.5rem; align-items: start; }
+@media (min-width: 960px) { .hy-contact-grid { grid-template-columns: 5fr 6fr; gap: 4rem; } }
+.hy-form { padding: 1.8rem 1.25rem; background: var(--hy-panel); }
+@media (min-width: 768px) { .hy-form { padding: 2.5rem; } }
+
+/* Chân trang */
+.hy-foot { display: grid; justify-items: center; gap: 1rem; padding: 3.5rem 1.25rem 2.5rem; text-align: center; background: var(--hy-foot); color: var(--hy-foot-fg); border-top: 3px double var(--hy-gold); }
+.hy-foot-line { font-family: var(--font-display); font-size: 1.3rem; color: #f3d9a8; letter-spacing: 0.1em; }
+.hy-foot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.6rem; font-size: 0.85rem; color: var(--hy-foot-fg); }
+.hy-foot nav a:hover { color: var(--hy-gold); }
+.hy-foot-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1.4rem; font-size: 0.85rem; color: var(--hy-foot-fg); }
+.hy-foot-copy { font-size: 0.75rem; color: var(--hy-foot-fg); opacity: 0.75; }

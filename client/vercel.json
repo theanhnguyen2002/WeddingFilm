@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://DIA-CHI-BACKEND/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://DIA-CHI-BACKEND/uploads/:path*" }
+  ]
+}

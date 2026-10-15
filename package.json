@@ -1,0 +1,19 @@
+{
+  "name": "hima",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18.17" },
+  "scripts": {
+    "postinstall": "npm --prefix client install && npm --prefix admin install",
+    "dev": "concurrently -k -n api,web,admin -c cyan,magenta,yellow \"npm:dev:server\" \"npm:dev:client\" \"npm:dev:admin\"",
+    "dev:server": "node --watch server/index.js",
+    "dev:client": "npm --prefix client run dev",
+    "dev:admin": "npm --prefix admin run dev",
+    "build": "npm --prefix client run build && npm --prefix admin run build",
+    "start": "node server/index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

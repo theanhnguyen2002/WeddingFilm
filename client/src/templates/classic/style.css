@@ -1,0 +1,5 @@
+/* Giao diện Cổ điển điện ảnh: dùng bảng màu gốc, chỉ nối màu nhấn do quản trị viên chọn vào --color-claret. */
+html[data-template='classic'] {
+  --color-claret: var(--accent, #7b2437);
+  --color-claret-deep: color-mix(in srgb, var(--accent, #7b2437) 72%, #000);
+}
