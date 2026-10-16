@@ -15,8 +15,30 @@ import {
 import { TEMPLATES } from './templates.js';
 import { TEXT_DEFS } from './texts.js';
 import { mailConfigured, recipientFor, sendInquiryMail, sendTestMail } from './mailer.js';
+import { v2 as cloudinary } from 'cloudinary';
 
 ensureAdmin();
+
+/* ---------- Cấu hình Cloudinary ---------- */
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+function uploadBufferToCloudinary(buf) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: 'himawedding' },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+    stream.end(buf);
+  });
+}
+/* ----------------------------------------- */
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const DIST = process.env.CLIENT_DIST ? path.resolve(process.env.CLIENT_DIST) : path.resolve(here, '../client/dist');
@@ -355,9 +377,9 @@ async function handleApi(req, res, url) {
     const buf = await readBody(req, MAX_UPLOAD);
     const ext = sniffImage(buf);
     if (!ext) throw new HttpError(415, 'File này không phải ảnh hợp lệ.');
-    const name = `${Date.now().toString(36)}-${crypto.randomBytes(4).toString('hex')}${ext}`;
-    await fsp.writeFile(path.join(UPLOAD_DIR, name), buf);
-    return send(res, 201, { url: `/uploads/${name}`, bytes: buf.length });
+    // Upload thẳng buffer lên Cloudinary
+    const result = await uploadBufferToCloudinary(buf);
+    return send(res, 201, { url: result.secure_url, bytes: buf.length });
   }
 
   if ((r = p.match(/^\/api\/admin\/(\w+)(?:\/(\w+))?$/)) && COLLECTIONS.includes(r[1])) {
