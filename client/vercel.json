@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://DIA-CHI-BACKEND/api/:path*" },
-    { "source": "/uploads/:path*", "destination": "https://DIA-CHI-BACKEND/uploads/:path*" }
+    { "source": "/api/:path*", "destination": "https://weddingfilm.onrender.com/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://weddingfilm.onrender.com/uploads/:path*" }
   ]
 }
