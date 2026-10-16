@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import './env.js';
 import { sanitizeTexts } from './texts.js';
 import { DEFAULT_TEMPLATE, TEMPLATE_IDS, sanitizeTemplateOptions } from './templates.js';
+import { MongoClient } from 'mongodb';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DATA_DIR = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(here, 'data');
@@ -235,7 +236,33 @@ function seed() {
   };
 }
 
-/* ---------- Đọc, ghi ---------- */
+/* ---------- Đọc, ghi & Đồng bộ MongoDB Atlas ---------- */
+let mongoCol = null;
+
+if (process.env.MONGODB_URI) {
+  const client = new MongoClient(process.env.MONGODB_URI);
+  client.connect()
+    .then(() => {
+      mongoCol = client.db('himadb').collection('app_data');
+      console.log('Đã kết nối MongoDB Atlas thành công!');
+
+      // Kéo dữ liệu từ Cloud về bộ nhớ khi server khởi động
+      return mongoCol.findOne({ _id: 'main_db' });
+    })
+    .then((doc) => {
+      if (doc?.data) {
+        Object.assign(db, doc.data);
+        // Ghi lại vào file db.json cục bộ để cache tạm
+        try {
+          fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+        } catch (_) {}
+      } else {
+        // Lần đầu chạy chưa có dữ liệu trên Cloud, đẩy dữ liệu hiện tại lên
+        mongoCol.insertOne({ _id: 'main_db', data: db }).catch(console.error);
+      }
+    })
+    .catch((err) => console.error('Lỗi kết nối MongoDB:', err));
+}
 function load() {
   try {
     return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
@@ -246,9 +273,23 @@ function load() {
   }
 }
 function write(data) {
-  const tmp = DB_FILE + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(data, null, 2));
-  fs.renameSync(tmp, DB_FILE);
+  // 1. Vẫn ghi ra file db.json cục bộ để dùng tạm
+  try {
+    const tmp = DB_FILE + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(data, null, 2));
+    fs.renameSync(tmp, DB_FILE);
+  } catch (err) {
+    console.error('Lỗi ghi file local:', err);
+  }
+
+  // 2. Đồng bộ vĩnh viễn lên MongoDB Atlas
+  if (mongoCol) {
+    mongoCol.updateOne(
+      { _id: 'main_db' },
+      { $set: { data: data } },
+      { upsert: true }
+    ).catch((err) => console.error('Lỗi lưu MongoDB Atlas:', err));
+  }
 }
 
 /** Dữ liệu cũ vẫn còn giá trị mẫu thì thay bằng thông tin thật. Giá trị bạn đã tự sửa thì giữ nguyên. */
